@@ -41,6 +41,17 @@
             <button onclick="selectOption('question1', 'No')">No</button>
         </div>
 
+        <div class="question" id="noResponse" style="display: none;">
+            <h2>Are you sure ????</h2>
+            <button onclick="selectOption('noResponse', 'Very Sure')">Are you very veryyy sure ??</button>
+            <button onclick="goBackTo('question1')">I change my mind</button>
+        </div>
+
+        <div class="question" id="verySure" style="display: none;">
+            <h2>Just me being disappointed 😞</h2>
+            <button onclick="goBackTo('question1')">Back to start</button>
+        </div>
+
         <div class="question" id="question2" style="display: none;">
             <h2>Great choice! Just to make sure you don't confuse me with someone else, pick the right person you want to date:</h2>
             <button onclick="selectOption('question2', 'Miguel')">The perfect hot Spanish guy Miguel</button>
@@ -72,40 +83,40 @@
             <button onclick="selectOption('restaurantOptions', 'Vietnamese')">Vietnamese</button>
             <button onclick="selectOption('restaurantOptions', 'Italian')">Italian</button>
             <button onclick="selectOption('restaurantOptions', 'French')">French</button>
+        </div>
 
-            <div id="restaurantTime" style="display: none;">
-                <h2>Choose a time for the restaurant:</h2>
-                <button onclick="selectOption('restaurantTime', '7pm')">7pm</button>
-                <button onclick="selectOption('restaurantTime', '7:30pm')">7:30pm</button>
-                <button onclick="selectOption('restaurantTime', '8pm')">8pm</button>
-            </div>
+        <div class="question" id="restaurantTime" style="display: none;">
+            <h2>Choose a time for the restaurant:</h2>
+            <button onclick="selectOption('restaurantTime', '7pm')">7pm</button>
+            <button onclick="selectOption('restaurantTime', '7:30pm')">7:30pm</button>
+            <button onclick="selectOption('restaurantTime', '8pm')">8pm</button>
         </div>
 
         <div class="question" id="cinemaOptions" style="display: none;">
             <h2>Pick a movie:</h2>
             <div>
                 <p>KRAVEN THE HUNTER (7pm or 9:30pm)</p>
-                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="window.open('https://www.youtube.com/watch?v=sample1', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'Kraven')">Choose</button>
             </div>
             <div>
                 <p>MOANA 2 (8:30pm)</p>
-                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="window.open('https://www.youtube.com/watch?v=sample2', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'Moana')">Choose</button>
             </div>
             <div>
                 <p>THE LORD OF THE RINGS: THE WAR OF THE ROHIRRIM (8:20pm)</p>
-                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="window.open('https://www.youtube.com/watch?v=sample3', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'LOTR')">Choose</button>
             </div>
             <div>
                 <p>GLADIATOR II (6:30pm)</p>
-                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="window.open('https://www.youtube.com/watch?v=sample4', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'Gladiator')">Choose</button>
             </div>
             <div>
                 <p>RED ONE (7pm)</p>
-                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="window.open('https://www.youtube.com/watch?v=sample5', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'RedOne')">Choose</button>
             </div>
         </div>
@@ -125,8 +136,14 @@
             answers[questionId] = answer;
             document.getElementById(questionId).style.display = 'none';
 
-            if (questionId === 'question1' && answer === 'Yes') {
-                document.getElementById('question2').style.display = 'block';
+            if (questionId === 'question1') {
+                if (answer === 'Yes') {
+                    document.getElementById('question2').style.display = 'block';
+                } else {
+                    document.getElementById('noResponse').style.display = 'block';
+                }
+            } else if (questionId === 'noResponse' && answer === 'Very Sure') {
+                document.getElementById('verySure').style.display = 'block';
             } else if (questionId === 'question2') {
                 if (answer === 'Chris') {
                     document.getElementById('question3').style.display = 'block';
@@ -150,6 +167,9 @@
         }
 
         function goBackTo(questionId) {
+            for (const question of document.querySelectorAll('.question')) {
+                question.style.display = 'none';
+            }
             document.getElementById(questionId).style.display = 'block';
         }
 
