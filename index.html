@@ -55,7 +55,7 @@
         <div class="question" id="question3" style="display: none;">
             <h2>Are you sure about this choice?</h2>
             <button onclick="selectOption('question3', 'Yes Sure')">Yes, I'm sure</button>
-            <button onclick="selectOption('question3', 'Change Mind')">I change my mind</button>
+            <button onclick="goBackTo('question2')">I change my mind</button>
         </div>
 
         <div class="question" id="question4" style="display: none;">
@@ -65,11 +65,6 @@
         </div>
 
         <div class="question" id="restaurantOptions" style="display: none;">
-            <h2>Choose a time for the restaurant:</h2>
-            <button onclick="selectOption('restaurantOptions', '7pm')">7pm</button>
-            <button onclick="selectOption('restaurantOptions', '7:30pm')">7:30pm</button>
-            <button onclick="selectOption('restaurantOptions', '8pm')">8pm</button>
-
             <h2>Choose a type of restaurant:</h2>
             <button onclick="selectOption('restaurantOptions', 'Japanese')">Japanese</button>
             <button onclick="selectOption('restaurantOptions', 'Indian')">Indian</button>
@@ -77,19 +72,47 @@
             <button onclick="selectOption('restaurantOptions', 'Vietnamese')">Vietnamese</button>
             <button onclick="selectOption('restaurantOptions', 'Italian')">Italian</button>
             <button onclick="selectOption('restaurantOptions', 'French')">French</button>
+
+            <div id="restaurantTime" style="display: none;">
+                <h2>Choose a time for the restaurant:</h2>
+                <button onclick="selectOption('restaurantTime', '7pm')">7pm</button>
+                <button onclick="selectOption('restaurantTime', '7:30pm')">7:30pm</button>
+                <button onclick="selectOption('restaurantTime', '8pm')">8pm</button>
+            </div>
         </div>
 
         <div class="question" id="cinemaOptions" style="display: none;">
             <h2>Pick a movie:</h2>
-            <button onclick="selectOption('cinemaOptions', 'Kraven')">KRAVEN THE HUNTER (7pm or 9:30pm)</button>
-            <button onclick="selectOption('cinemaOptions', 'Moana')">MOANA 2 (8:30pm)</button>
-            <button onclick="selectOption('cinemaOptions', 'LOTR')">THE LORD OF THE RINGS: THE WAR OF THE ROHIRRIM (8:20pm)</button>
-            <button onclick="selectOption('cinemaOptions', 'Gladiator')">GLADIATOR II (6:30pm)</button>
-            <button onclick="selectOption('cinemaOptions', 'RedOne')">RED ONE (7pm)</button>
+            <div>
+                <p>KRAVEN THE HUNTER (7pm or 9:30pm)</p>
+                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="selectOption('cinemaOptions', 'Kraven')">Choose</button>
+            </div>
+            <div>
+                <p>MOANA 2 (8:30pm)</p>
+                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="selectOption('cinemaOptions', 'Moana')">Choose</button>
+            </div>
+            <div>
+                <p>THE LORD OF THE RINGS: THE WAR OF THE ROHIRRIM (8:20pm)</p>
+                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="selectOption('cinemaOptions', 'LOTR')">Choose</button>
+            </div>
+            <div>
+                <p>GLADIATOR II (6:30pm)</p>
+                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="selectOption('cinemaOptions', 'Gladiator')">Choose</button>
+            </div>
+            <div>
+                <p>RED ONE (7pm)</p>
+                <iframe width="300" height="200" src="https://www.youtube.com/watch?v=hDZ7y8RP5HE" frameborder="0" allowfullscreen></iframe>
+                <button onclick="selectOption('cinemaOptions', 'RedOne')">Choose</button>
+            </div>
         </div>
 
         <div id="result" style="display: none;">
-            <h2>Your Choices:</h2>
+            <h2>Thank you! You're amazing! 🥰</h2>
+            <p>Your choices have been saved. I'll get back to you soon!</p>
             <ul id="selectedChoices"></ul>
             <button onclick="restartQuiz()">Restart</button>
         </div>
@@ -119,9 +142,15 @@
                 } else if (answer === 'Cinema') {
                     document.getElementById('cinemaOptions').style.display = 'block';
                 }
+            } else if (questionId === 'restaurantOptions') {
+                document.getElementById('restaurantTime').style.display = 'block';
             } else {
                 showResults();
             }
+        }
+
+        function goBackTo(questionId) {
+            document.getElementById(questionId).style.display = 'block';
         }
 
         function showResults() {
@@ -137,6 +166,18 @@
 
             document.getElementById('questions').style.display = 'none';
             resultDiv.style.display = 'block';
+            sendResults();
+        }
+
+        function sendResults() {
+            const results = JSON.stringify(answers);
+            fetch('https://example.com/api/saveResults', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: results
+            }).then(response => console.log('Results sent successfully!')).catch(error => console.error('Error sending results:', error));
         }
 
         function restartQuiz() {
