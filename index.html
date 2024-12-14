@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <h1>Date Decision Tree</h1>
+    <h1>Date with me :3</h1>
 
     <div id="questions">
         <div class="question" id="question1">
@@ -43,7 +43,7 @@
 
         <div class="question" id="noResponse" style="display: none;">
             <h2>Are you sure ????</h2>
-            <button onclick="selectOption('noResponse', 'Very Sure')">Are you very veryyy sure ??</button>
+            <button onclick="selectOption('noResponse', 'Very Sure')">Yes, I'm sure</button>
             <button onclick="goBackTo('question1')">I change my mind</button>
         </div>
 
@@ -64,7 +64,7 @@
         </div>
 
         <div class="question" id="question3" style="display: none;">
-            <h2>Are you sure about this choice?</h2>
+            <h2>Are you sure ????</h2>
             <button onclick="selectOption('question3', 'Yes Sure')">Yes, I'm sure</button>
             <button onclick="goBackTo('question2')">I change my mind</button>
         </div>
@@ -96,27 +96,27 @@
             <h2>Pick a movie:</h2>
             <div>
                 <p>KRAVEN THE HUNTER (7pm or 9:30pm)</p>
-                <button onclick="window.open('https://www.youtube.com/watch?v=sample1', '_blank')">Watch Trailer</button>
+                <button onclick="window.open('https://www.youtube.com/watch?v=hDZ7y8RP5HE', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'Kraven')">Choose</button>
             </div>
             <div>
                 <p>MOANA 2 (8:30pm)</p>
-                <button onclick="window.open('https://www.youtube.com/watch?v=sample2', '_blank')">Watch Trailer</button>
+                <button onclick="window.open('https://www.youtube.com/watch?v=hDZ7y8RP5HE', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'Moana')">Choose</button>
             </div>
             <div>
                 <p>THE LORD OF THE RINGS: THE WAR OF THE ROHIRRIM (8:20pm)</p>
-                <button onclick="window.open('https://www.youtube.com/watch?v=sample3', '_blank')">Watch Trailer</button>
+                <button onclick="window.open('https://www.youtube.com/watch?v=hDZ7y8RP5HE', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'LOTR')">Choose</button>
             </div>
             <div>
                 <p>GLADIATOR II (6:30pm)</p>
-                <button onclick="window.open('https://www.youtube.com/watch?v=sample4', '_blank')">Watch Trailer</button>
+                <button onclick="window.open('https://www.youtube.com/watch?v=hDZ7y8RP5HE', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'Gladiator')">Choose</button>
             </div>
             <div>
                 <p>RED ONE (7pm)</p>
-                <button onclick="window.open('https://www.youtube.com/watch?v=sample5', '_blank')">Watch Trailer</button>
+                <button onclick="window.open('https://www.youtube.com/watch?v=hDZ7y8RP5HE', '_blank')">Watch Trailer</button>
                 <button onclick="selectOption('cinemaOptions', 'RedOne')">Choose</button>
             </div>
         </div>
@@ -148,8 +148,7 @@
                 if (answer === 'Chris') {
                     document.getElementById('question3').style.display = 'block';
                 } else {
-                    alert(`Funny response for ${answer}`);
-                    document.getElementById('question3').style.display = 'block';
+                    document.getElementById('noResponse').style.display = 'block';
                 }
             } else if (questionId === 'question3' && answer === 'Yes Sure') {
                 document.getElementById('question4').style.display = 'block';
@@ -161,7 +160,7 @@
                 }
             } else if (questionId === 'restaurantOptions') {
                 document.getElementById('restaurantTime').style.display = 'block';
-            } else {
+            } else if (questionId === 'restaurantTime' || questionId === 'cinemaOptions') {
                 showResults();
             }
         }
