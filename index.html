@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Choices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .option {
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .option img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .option img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Plan Our Date!</h1>
+    <p>Choose your preferences:</p>
+
+    <div id="questions">
+        <div class="question" id="question1">
+            <h2>What kind of activity do you prefer?</h2>
+            <div class="option" onclick="selectOption('question1', 'Movie Night')">
+                <img src="https://via.placeholder.com/150?text=Movie+Night" alt="Movie Night">
+            </div>
+            <div class="option" onclick="selectOption('question1', 'Outdoor Adventure')">
+                <img src="https://via.placeholder.com/150?text=Outdoor+Adventure" alt="Outdoor Adventure">
+            </div>
+        </div>
+
+        <div class="question" id="question2">
+            <h2>What kind of food do you like?</h2>
+            <div class="option" onclick="selectOption('question2', 'Italian')">
+                <img src="https://via.placeholder.com/150?text=Italian" alt="Italian">
+            </div>
+            <div class="option" onclick="selectOption('question2', 'Japanese')">
+                <img src="https://via.placeholder.com/150?text=Japanese" alt="Japanese">
+            </div>
+        </div>
+
+        <div class="question" id="question3">
+            <h2>What time of day?</h2>
+            <div class="option" onclick="selectOption('question3', 'Morning')">
+                <img src="https://via.placeholder.com/150?text=Morning" alt="Morning">
+            </div>
+            <div class="option" onclick="selectOption('question3', 'Evening')">
+                <img src="https://via.placeholder.com/150?text=Evening" alt="Evening">
+            </div>
+        </div>
+    </div>
+
+    <div id="result" style="display: none;">
+        <h2>Your Date Choices:</h2>
+        <ul id="selectedChoices"></ul>
+        <button onclick="restartQuiz()">Restart</button>
+    </div>
+
+    <script>
+        const answers = {};
+
+        function selectOption(questionId, answer) {
+            answers[questionId] = answer;
+            document.getElementById(questionId).style.display = 'none';
+
+            const nextQuestion = document.getElementById(questionId).nextElementSibling;
+            if (nextQuestion && nextQuestion.classList.contains('question')) {
+                nextQuestion.style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultDiv = document.getElementById('result');
+            const selectedChoices = document.getElementById('selectedChoices');
+            selectedChoices.innerHTML = '';
+
+            for (const [question, answer] of Object.entries(answers)) {
+                const li = document.createElement('li');
+                li.textContent = `${question.replace('question', 'Q')} - ${answer}`;
+                selectedChoices.appendChild(li);
+            }
+
+            document.getElementById('questions').style.display = 'none';
+            resultDiv.style.display = 'block';
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
