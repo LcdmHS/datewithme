@@ -132,75 +132,19 @@
     <script>
         const answers = {};
 
-        function selectOption(questionId, answer) {
-            answers[questionId] = answer;
-            document.getElementById(questionId).style.display = 'none';
+function sendResults() {
+    const results = new URLSearchParams();
+    for (const [key, value] of Object.entries(answers)) {
+        results.append(key, value);
+    }
 
-            if (questionId === 'question1') {
-                if (answer === 'Yes') {
-                    document.getElementById('question2').style.display = 'block';
-                } else {
-                    document.getElementById('noResponse').style.display = 'block';
-                }
-            } else if (questionId === 'noResponse' && answer === 'Very Sure') {
-                document.getElementById('verySure').style.display = 'block';
-            } else if (questionId === 'question2') {
-                if (answer === 'Chris') {
-                    document.getElementById('question3').style.display = 'block';
-                } else {
-                    document.getElementById('noResponse').style.display = 'block';
-                }
-            } else if (questionId === 'question3' && answer === 'Yes Sure') {
-                document.getElementById('question4').style.display = 'block';
-            } else if (questionId === 'question4') {
-                if (answer === 'Restaurant') {
-                    document.getElementById('restaurantOptions').style.display = 'block';
-                } else if (answer === 'Cinema') {
-                    document.getElementById('cinemaOptions').style.display = 'block';
-                }
-            } else if (questionId === 'restaurantOptions') {
-                document.getElementById('restaurantTime').style.display = 'block';
-            } else if (questionId === 'restaurantTime' || questionId === 'cinemaOptions') {
-                showResults();
-            }
-        }
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSeIAGzifQj378kkEGHGxOrtzjAcqR-4_3WJNckej50hWa3RsA/viewform?usp=header', { // Remplacez VOTRE_URL_DE_SOUMISSION par l'URL copiée
+        method: 'POST',
+        body: results
+    }).then(response => console.log('Results sent successfully!'))
+      .catch(error => console.error('Error sending results:', error));
+}
 
-        function goBackTo(questionId) {
-            for (const question of document.querySelectorAll('.question')) {
-                question.style.display = 'none';
-            }
-            document.getElementById(questionId).style.display = 'block';
-        }
-
-        function showResults() {
-            const resultDiv = document.getElementById('result');
-            const selectedChoices = document.getElementById('selectedChoices');
-            selectedChoices.innerHTML = '';
-
-            for (const [question, answer] of Object.entries(answers)) {
-                const li = document.createElement('li');
-                li.textContent = `${question.replace('question', 'Step')} - ${answer}`;
-                selectedChoices.appendChild(li);
-            }
-
-            document.getElementById('questions').style.display = 'none';
-            resultDiv.style.display = 'block';
-            sendResults();
-        }
-
-        function sendResults() {
-            const results = JSON.stringify(answers);
-            fetch('https://example.com/api/saveResults', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: results
-            }).then(response => console.log('Results sent successfully!')).catch(error => console.error('Error sending results:', error));
-        }
-
-        function restartQuiz() {
-            location.reload();
         }
     </script>
 </body>
