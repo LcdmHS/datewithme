@@ -32,45 +32,67 @@
     </style>
 </head>
 <body>
-    <h1>Plan Our Date!</h1>
-    <p>Choose your preferences:</p>
+    <h1>Date Decision Tree</h1>
 
     <div id="questions">
         <div class="question" id="question1">
-            <h2>What kind of activity do you prefer?</h2>
-            <div class="option" onclick="selectOption('question1', 'Movie Night')">
-                <img src="https://via.placeholder.com/150?text=Movie+Night" alt="Movie Night">
-            </div>
-            <div class="option" onclick="selectOption('question1', 'Outdoor Adventure')">
-                <img src="https://via.placeholder.com/150?text=Outdoor+Adventure" alt="Outdoor Adventure">
-            </div>
+            <h2>Hey babe, do you want to go on a date with me? :3</h2>
+            <button onclick="selectOption('question1', 'Yes')">Yes</button>
+            <button onclick="selectOption('question1', 'No')">No</button>
         </div>
 
-        <div class="question" id="question2">
-            <h2>What kind of food do you like?</h2>
-            <div class="option" onclick="selectOption('question2', 'Italian')">
-                <img src="https://via.placeholder.com/150?text=Italian" alt="Italian">
-            </div>
-            <div class="option" onclick="selectOption('question2', 'Japanese')">
-                <img src="https://via.placeholder.com/150?text=Japanese" alt="Japanese">
-            </div>
+        <div class="question" id="question2" style="display: none;">
+            <h2>Great choice! Just to make sure you don't confuse me with someone else, pick the right person you want to date:</h2>
+            <button onclick="selectOption('question2', 'Miguel')">The perfect hot Spanish guy Miguel</button>
+            <button onclick="selectOption('question2', 'Coworker')">Your crush coworker</button>
+            <button onclick="selectOption('question2', 'Ex')">Your ex you still love</button>
+            <button onclick="selectOption('question2', 'Pickleboy')">The gym pickleboy 6 pack guy</button>
+            <button onclick="selectOption('question2', 'Teacher')">Your dance teacher</button>
+            <button onclick="selectOption('question2', 'Husband')">Your beloved Indian husband</button>
+            <button onclick="selectOption('question2', 'Chris')">The basic guy Chris</button>
         </div>
 
-        <div class="question" id="question3">
-            <h2>What time of day?</h2>
-            <div class="option" onclick="selectOption('question3', 'Morning')">
-                <img src="https://via.placeholder.com/150?text=Morning" alt="Morning">
-            </div>
-            <div class="option" onclick="selectOption('question3', 'Evening')">
-                <img src="https://via.placeholder.com/150?text=Evening" alt="Evening">
-            </div>
+        <div class="question" id="question3" style="display: none;">
+            <h2>Are you sure about this choice?</h2>
+            <button onclick="selectOption('question3', 'Yes Sure')">Yes, I'm sure</button>
+            <button onclick="selectOption('question3', 'Change Mind')">I change my mind</button>
         </div>
-    </div>
 
-    <div id="result" style="display: none;">
-        <h2>Your Date Choices:</h2>
-        <ul id="selectedChoices"></ul>
-        <button onclick="restartQuiz()">Restart</button>
+        <div class="question" id="question4" style="display: none;">
+            <h2>Pick an activity:</h2>
+            <button onclick="selectOption('question4', 'Restaurant')">Restaurant</button>
+            <button onclick="selectOption('question4', 'Cinema')">Cinema</button>
+        </div>
+
+        <div class="question" id="restaurantOptions" style="display: none;">
+            <h2>Choose a time for the restaurant:</h2>
+            <button onclick="selectOption('restaurantOptions', '7pm')">7pm</button>
+            <button onclick="selectOption('restaurantOptions', '7:30pm')">7:30pm</button>
+            <button onclick="selectOption('restaurantOptions', '8pm')">8pm</button>
+
+            <h2>Choose a type of restaurant:</h2>
+            <button onclick="selectOption('restaurantOptions', 'Japanese')">Japanese</button>
+            <button onclick="selectOption('restaurantOptions', 'Indian')">Indian</button>
+            <button onclick="selectOption('restaurantOptions', 'Vegetarian')">Vegetarian</button>
+            <button onclick="selectOption('restaurantOptions', 'Vietnamese')">Vietnamese</button>
+            <button onclick="selectOption('restaurantOptions', 'Italian')">Italian</button>
+            <button onclick="selectOption('restaurantOptions', 'French')">French</button>
+        </div>
+
+        <div class="question" id="cinemaOptions" style="display: none;">
+            <h2>Pick a movie:</h2>
+            <button onclick="selectOption('cinemaOptions', 'Kraven')">KRAVEN THE HUNTER (7pm or 9:30pm)</button>
+            <button onclick="selectOption('cinemaOptions', 'Moana')">MOANA 2 (8:30pm)</button>
+            <button onclick="selectOption('cinemaOptions', 'LOTR')">THE LORD OF THE RINGS: THE WAR OF THE ROHIRRIM (8:20pm)</button>
+            <button onclick="selectOption('cinemaOptions', 'Gladiator')">GLADIATOR II (6:30pm)</button>
+            <button onclick="selectOption('cinemaOptions', 'RedOne')">RED ONE (7pm)</button>
+        </div>
+
+        <div id="result" style="display: none;">
+            <h2>Your Choices:</h2>
+            <ul id="selectedChoices"></ul>
+            <button onclick="restartQuiz()">Restart</button>
+        </div>
     </div>
 
     <script>
@@ -80,9 +102,23 @@
             answers[questionId] = answer;
             document.getElementById(questionId).style.display = 'none';
 
-            const nextQuestion = document.getElementById(questionId).nextElementSibling;
-            if (nextQuestion && nextQuestion.classList.contains('question')) {
-                nextQuestion.style.display = 'block';
+            if (questionId === 'question1' && answer === 'Yes') {
+                document.getElementById('question2').style.display = 'block';
+            } else if (questionId === 'question2') {
+                if (answer === 'Chris') {
+                    document.getElementById('question3').style.display = 'block';
+                } else {
+                    alert(`Funny response for ${answer}`);
+                    document.getElementById('question3').style.display = 'block';
+                }
+            } else if (questionId === 'question3' && answer === 'Yes Sure') {
+                document.getElementById('question4').style.display = 'block';
+            } else if (questionId === 'question4') {
+                if (answer === 'Restaurant') {
+                    document.getElementById('restaurantOptions').style.display = 'block';
+                } else if (answer === 'Cinema') {
+                    document.getElementById('cinemaOptions').style.display = 'block';
+                }
             } else {
                 showResults();
             }
@@ -95,7 +131,7 @@
 
             for (const [question, answer] of Object.entries(answers)) {
                 const li = document.createElement('li');
-                li.textContent = `${question.replace('question', 'Q')} - ${answer}`;
+                li.textContent = `${question.replace('question', 'Step')} - ${answer}`;
                 selectedChoices.appendChild(li);
             }
 
